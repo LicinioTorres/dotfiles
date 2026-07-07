@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+#--------- PATH FOR SCRIPTS DIRECTORY
+export SCRIPTS_PATH="PATH/TO/SCRIPTS"
+#-------------------------------------
+
+
