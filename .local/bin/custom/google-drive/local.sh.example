@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+#--------- PATH FOR SCRIPTS DIRECTORY
+export SCRIPTS_PATH="$HOME/path/to/scripts"
+#-------------------------------------
+
+#----- PATH FOR LOCAL DIRECTORY (RCLONE) ----------------------
+# Path in local machine where rclone should operate
+#--------------------------------------------------------------
+export LOCAL_PATH="$HOME/path/to/local/folder"
+#--------------------------------------------------------------
+
+#----- REMOTE RCLONE ------------------------------------------
+# rclone listremotes and check wich remote to operate
+#--------------------------------------------------------------
+export REMOTE_PATH="remote-rclone-path:"
+#--------------------------------------------------------------
+
+#----- SAFETY FILE NAME ---------------------------------------
+# Name for the file for the --safety-file flag on rclone bysinc
+export SAFETY_FILE="rclone-safety-check.txt"
+#--------------------------------------------------------------
+
+#----- REMOTE SAFETY FILE NAME ---------------------------------------
+# Name for the file in remote for the --safety-file flag on rclone bysinc
+#--------------------------------------------------------------
+REMOTE_SAFETY="REMOTE_PATH:rclone-safety-check.txt"
+#--------------------------------------------------------------
+
+#----- LOGS PATH ----------------------------------------------
+# Name for the file for the --safety-file flag on rclone bysinc
+export LOG_PATH="path/to/logs"
+#--------------------------------------------------------------
