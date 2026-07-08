@@ -1,0 +1,17 @@
+#~/.config/shell/aliases
+
+#================================
+#--- Aliases -------
+#================================
+
+#---------- Yazi ---------------
+alias y='yy'
+alias yazi='yy'
+alias explore='yy'
+alias e='yy'
+
+#---------- ZOXIDE --------------
+alias cd='z'
+
+#---------- Ls ------------------
+alias la="ls -a"
