@@ -1,0 +1,31 @@
+
+configuration {
+    /* your other config settings */
+  kb-select-1: "1";
+	kb-select-2: "2";
+	kb-select-3: "3";
+	kb-select-4: "4";
+	kb-select-5: "5";
+	kb-select-6: "6";
+	kb-select-7: "7";
+	kb-select-8: "8";
+	kb-select-9: "9";
+  
+  kb-row-up: "k";
+	kb-row-down: "j";
+}
+
+@theme "crt"
+
+inputbar {
+    enabled: true;
+    children:   [ prompt ];
+}
+entry {
+    enabled: false;
+}
+prompt {
+  enabled: true;
+}
+
+

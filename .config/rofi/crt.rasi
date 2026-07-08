@@ -1,0 +1,105 @@
+* { // FONT CONFIGS
+    font:   "FiraCode Nerd Font 13";
+    background-color:   transparent;
+    text-color:         @main;
+    margin:     1px;
+    padding:    1px;
+    spacing:    1px;
+}
+
+window { // Main 
+    location: center;
+    anchor: center;
+    width:          480;
+    border-radius:  24px;
+    border :        3px;
+    border-color:   @bordera;
+    background-color:   @bg;
+}
+
+mainbox {
+    padding:    20px;
+}
+
+inputbar {
+    background-color:   @bg;
+    border-color:       @bg;
+
+    border:         2px;
+    border-radius:  16px;
+
+    padding:    8px 16px;
+    spacing:    8px;
+}
+
+prompt {
+    text-color: @main;
+}
+
+entry {
+    place-holder: "Search ...";
+}
+
+message {
+    margin:             12px 0 0;
+    border-radius:      16px;
+    border-color:       @main;
+    background-color:   transparent;
+}
+
+textbox {
+    padding:    8px 24px;
+    text-color: @main;
+    background-color: @bg;
+    border: 2px;
+    border-radius: 16px;
+    border-color: @main;
+}
+
+listview {
+    background-color:   transparent;
+
+    margin:     12px 0 0;
+    lines:      8;
+    columns:    1;
+
+    fixed-height: false;
+}
+
+element { //Selection backgroud 
+    padding:        8px 16px;
+    spacing:        8px;
+    border-radius:  16px;
+}
+
+element normal active {
+    text-color: @bordera;
+}
+
+element alternate active {
+    text-color: @bordera;
+}
+
+element selected normal, element selected active {
+    background-color:   @dim;
+    text-color: @black;
+
+}
+
+element-icon {
+    size:           1em;
+    vertical-align: 0.5;
+}
+
+element-text {
+    text-color: inherit;
+}
+* {
+    main:    #00FF66; // Main Text Color
+    bg:      #000A00; // Main BackGorund Color
+    highlight:    #99FFCC; //color outside border
+    bordera:    #33CC66; // selected option backgroud color
+    borderi:    #00331A; // Font Color
+    dim:    #00994C; // Não usado, Branco
+    black: #000000; // preto
+}
