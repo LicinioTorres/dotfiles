@@ -1,21 +1,13 @@
-# Created by newuser for 5.9.1
-#
-#
-#
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-#Sources
-source .config/bash/bash-settings
-source .config/bash/bash-aliases
+#------ Source Aliases ------
+source $HOME/.config/shell/aliases
 
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-#PS1='[\u@\h \W]\$ '
+#------ Text Prompt -------
+PS1=' |%D{%H:%M}|  [%m@%n: %~ ] => '
 
-PS1=' |%T|  [%m@%n: %~ ] => '
-
+#---- Yazi cd on exit function -----
 function yy() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="$tmp"
@@ -24,13 +16,7 @@ function yy() {
   rm -f -- "$tmp"
 }
 
-# 1. zoxide first
+#---- Zoxide --------
 eval "$(zoxide init zsh)"
 
-# 2. then your override
-hypr_cwd_update() {
-    pwd > "${XDG_RUNTIME_DIR}/hypr-cwd"
-}
-
-PROMPT_COMMAND=hypr_cwd_update
 
