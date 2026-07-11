@@ -1,0 +1,3 @@
+return{
+	require("mason").setup()
+}

@@ -1,0 +1,12 @@
+{
+  "plugins": {
+    "mason.nvim": {
+      "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
+    "nvim-treesitter": {
+      "rev": "4d9466677a5ceadef104eaa0fe08d60d91c4e9a7",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    }
+  }
+}
