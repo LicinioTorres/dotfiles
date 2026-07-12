@@ -1,0 +1,6 @@
+-- Local Variables
+
+return {
+  scripts = "SCRIPTS/PATH/",
+  screenshots = "PATH/TO/SCREENSHOTS",
+}

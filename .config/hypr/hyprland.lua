@@ -1,0 +1,5 @@
+require("hyprland.autostart")
+require("hyprland.input")
+require("hyprland.keybinds")
+require("hyprland.monitors")
+require("hyprland.theme")
