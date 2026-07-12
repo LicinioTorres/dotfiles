@@ -2,3 +2,5 @@
 .local/bin/custom/new-file/local.sh
 .config/rclone
 .config/hypr/hyprland/local.lua
+.config/hypr/hyprland-old/
+
