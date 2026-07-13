@@ -3,4 +3,5 @@
 .config/rclone
 .config/hypr/hyprland/local.lua
 .config/hypr/hyprland-old/
+.config/shell/local
 

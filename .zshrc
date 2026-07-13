@@ -4,6 +4,9 @@
 #------ Source Aliases ------
 source $HOME/.config/shell/aliases
 
+#------ Source Local -------
+source .config/shell/local
+
 #------ Text Prompt -------
 PS1=' |%D{%H:%M}|  [%m@%n: %~ ] => '
 

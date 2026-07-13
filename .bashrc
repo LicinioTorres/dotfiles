@@ -8,8 +8,12 @@
 #------ Source Aliases -----
 source .config/shell/aliases
 
+#------ Source Local -------
+source .config/shell/local
+
 #------ Text Prompt ------
 PS1='\D{%H:%M:%S}  [\u: \w ] => '
+
 
 #----- CWD Update Hyprland -------
 hypr_cwd_update() {
