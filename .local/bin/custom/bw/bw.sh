@@ -124,7 +124,8 @@ bw_rofi() {
                     | select(.id==$id)
                     | .login.password
                 ' \
-                | wl-copy --paste-once
+                | wl-copy
+                cliphist list | sed -i '$d' ~/.cache/cliphist/db
                 ;;
 
 
