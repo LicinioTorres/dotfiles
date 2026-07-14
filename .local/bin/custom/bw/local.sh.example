@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# gpg keypair id for cache and masterpassword encyption
+export $BW_KEY_ID = "KEY_NAME"
+
+# Path to the cached encrypted bitwarden vault
+export $BW_CACHE_PATH = "PATH/TO/CACHE"
+
+# Path to the encrypted Bitwarden Master Password
+export $BW_PASSWORD_PATH = "PATH/TO/PASSWORD"
