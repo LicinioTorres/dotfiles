@@ -22,6 +22,7 @@ mainbox {
 }
 
 inputbar {
+    children: [prompt, entry];
     background-color:   @bg;
     border-color:       @bg;
 
@@ -67,6 +68,8 @@ listview {
 }
 
 element { //Selection backgroud 
+    children: [element-icon , element-text];
+    vertical-align: 0.5;
     padding:        8px 16px;
     spacing:        8px;
     border-radius:  16px;
@@ -88,7 +91,7 @@ element selected normal, element selected active {
 
 element-icon {
     size:           1em;
-    vertical-align: 0.5;
+    text-color: @main;
 }
 
 element-text {
