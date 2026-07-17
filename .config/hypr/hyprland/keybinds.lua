@@ -18,7 +18,7 @@ hl.bind(mainMod.." + N", hl.dsp.exec_cmd(vars.scripts.."new-file/new-file-rofi.s
 hl.bind(mainMod.." + SHIFT + V", hl.dsp.exec_cmd(vars.scripts.."cp-menu/paste-menu-clipboard.sh")) -- Paste to Clipboard Menu
 hl.bind(mainMod.." + V", hl.dsp.exec_cmd(vars.scripts.."cp-menu/paste-menu-insert.sh")) -- Insert Clipboard Menu
 hl.bind(mainMod.." + S", hl.dsp.exec_cmd(vars.scripts.."google-drive/rofi-sync-menu.sh")) -- Google-Drive Menu
-hl.bind(mainMod.." + P", hl.dsp.exec_cmd("rofi -show bw -modes bw:"..vars.scripts.."bw/bw.sh")) -- Bitwarden Menu
+hl.bind(mainMod.." + P", hl.dsp.exec_cmd(vars.scripts.."bw/bw.sh")) -- Bitwarden Menu
 
 -- App Binds
 hl.bind(mainMod.." + B", hl.dsp.exec_cmd(browser)) -- Open Browser

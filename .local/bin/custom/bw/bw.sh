@@ -13,21 +13,24 @@ fi
 
 source "$LOCAL_SH"
 
-while true; do
-  PASSPHRASE="$(printf ''| rofi -dmenu -theme bw-password -password -p PIN)"
+bw_unlock() {
+  while true; do
+    PASSPHRASE="$(printf ''| rofi -dmenu -theme bw-password -password -p PIN)"
 
-  #Escape
-  [[ $? -ne 0 ]] && exit 1
+    #Escape
+    [[ $? -ne 0 ]] && exit 1
 
-  #Pin Inserted
-  [[ -z "$PASSPHRASE" ]] && rofi -e "Please Insert Passphrase" && continue
+    #Pin Inserted
+    [[ -z "$PASSPHRASE" ]] && rofi -e "Please Insert Passphrase" && continue
 
-  if BW_PASSWORD="$(gpg --batch --pinentry-mode loopback --passphrase "$PASSPHRASE" --quiet --decrypt "$BW_PASSWORD_PATH" 2>/dev/null)"; then
-    export BW_PASSWORD
-    break
-  fi
-  rofi -e "Incorrect Passphrase"
-done
+    if BW_PASSWORD="$(gpg --batch --pinentry-mode loopback --passphrase "$PASSPHRASE" --quiet --decrypt "$BW_PASSWORD_PATH" 2>/dev/null)"; then
+      export BW_PASSWORD
+      bw_rofi
+      exit 0
+    fi
+    rofi -e "Incorrect Passphrase"
+  done
+}
 
 # Make a encrypted Vault Cache
 bw_refresh_cache() {
@@ -48,96 +51,60 @@ bw_refresh_cache() {
 
 
 bw_rofi() {
+    # Refresh cache if needed
+    #   No Vault Found
     if [ ! -f "$BW_CACHE_PATH" ]; then
-        bw_refresh_cache || return 1
+        bw_refresh_cache || exit 1
     fi
-
+    # Every Week
     if find "$BW_CACHE_PATH" -mtime +7 | grep -q .; then
-        bw_refresh_cache || return 1
+        bw_refresh_cache || exit 1
     fi
 
+    # Decrypt into local
+    local vault
+    vault=$(gpg --batch \
+        --pinentry-mode loopback \
+        --passphrase "$PASSPHRASE" \
+        --quiet \
+        --decrypt "$BW_CACHE_PATH") || { rofi -e "Failed to decrypt vault"; return 1; }
 
-    while true; do
+    # Step 1: pick an item
+    local selection
+    selection=$(echo "$vault" | jq -r '.[] | select(.login.username != null) | "\(.name) (\(.login.username))"' |
+        rofi -dmenu -p "Bitwarden")
 
-        local items
-        items=$(gpg --batch --pinentry-mode loopback --passphrase "$PASSPHRASE" --quiet --decrypt "$BW_CACHE_PATH" \
-            | jq -r '
-                .[]
-                | select(.login != null)
-                | "\(.name)\t\(.id)"
-            ')
+    [[ -z "$selection" ]] && return 0
 
+    # Map selection back to the item's id (exact match on "name (username)")
+    local id
+    id=$(echo "$vault" | jq -r --arg sel "$selection" '
+        .[] | select("\(.name) (\(.login.username))" == $sel) | .id
+    ' | head -n1)
 
-        local selected
+    [[ -z "$id" || "$id" == "null" ]] && { rofi -e "Item not found"; return 1; }
 
-        selected=$(echo "$items" \
-            | cut -f1 \
-            | rofi -dmenu \
-                -i \
-                -p "󰟵 BITWARDEN VAULT" \
-                -kb-custom-1 "Alt+r")
+    # Step 2: pick a field
+    local choice
+    choice=$(printf "Username\nPassword\nTOTP\n" | rofi -dmenu -p "Bitwarden")
 
-        local rofi_status=$?
-
-
-        # Alt+r refresh
-        if [[ $rofi_status -eq 10 ]]; then
-            bw_refresh_cache || rofi -e "Cache refresh failed"
-            continue
-        fi
-
-
-        # Escape
-        [[ $rofi_status -ne 0 ]] && return
-
-
-        [ -z "$selected" ] && return
-
-
-        local id
-        id=$(echo "$items" \
-            | awk -F'\t' -v name="$selected" '$1 == name {print $2}')
-
-
-        local choice
-        choice=$(printf "Username\nPassword\nTOTP\n" \
-            | rofi -dmenu -p "$selected")
-
-
-        case "$choice" in
-
-            Username)
-                gpg --batch --pinentry-mode loopback --passphrase "$PASSPHRASE" --quiet --decrypt "$BW_CACHE_PATH" \
-                | jq -r --arg id "$id" '
-                    .[]
-                    | select(.id==$id)
-                    | .login.username
-                ' \
-                | wl-copy
-                ;;
-
-
-            Password)
-              gpg --batch --pinentry-mode loopback --passphrase "$PASSPHRASE" --quiet --decrypt "$BW_CACHE_PATH" \
-                | jq -r --arg id "$id" '
-                    .[]
-                    | select(.id==$id)
-                    | .login.password
-                ' \
-                | wl-copy
-                cliphist list | sed -i '$d' ~/.cache/cliphist/db
-                ;;
-
-
-            TOTP)
-                bw get totp "$id" --session "$BW_SESSION" \
-                | wl-copy
-                ;;
-
-        esac
-
-    done
+    case "$choice" in
+        Username)
+            echo "$vault" | jq -r --arg id "$id" '.[] | select(.id==$id) | .login.username' | wl-copy
+            ;;
+        Password)
+            echo "$vault" | jq -r --arg id "$id" '.[] | select(.id==$id) | .login.password' | wl-copy
+            cliphist list | sed -i '$d' ~/.cache/cliphist/db
+            ;;
+        TOTP)
+            if [ -z "$BW_SESSION" ]; then
+                export BW_SESSION="$(bw unlock --passwordenv BW_PASSWORD --raw)" || { rofi -e "Failed to unlock session for TOTP"; return 1; }
+            fi
+            bw get totp "$id" --session "$BW_SESSION" | wl-copy
+            ;;
+    esac
 }
 
+bw_unlock
 
-bw_rofi
+
