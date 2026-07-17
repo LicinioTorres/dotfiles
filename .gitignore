@@ -6,4 +6,5 @@
 .config/shell/local
 .config/Bitwarden CLI
 .local/bin/custom/bw/local.sh
+.config/qutebrowser/qsettings/
 
