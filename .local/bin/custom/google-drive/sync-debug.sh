@@ -85,6 +85,7 @@ if [[ "$LOG" == "n" ]]; then
     --fix-case \
     --dry-run \
     --timeout 20s \
+    --exclude-from "$IGNORE_PATH" \
     -MvvP  
 else
     rclone bisync "$REMOTE_PATH" "$LOCAL_PATH" \

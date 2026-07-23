@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 
 #config
-LOCAL_PATH="$HOME/google-drive"
-REMOTE_PATH="gdrive:"
-SAFETY_FILE="rclone-safety-check.txt"
-GREEN="\033[1;32m"
-NC="\033m[0m"
+#---- Source Local Variables
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+LOCAL_SH="$SCRIPT_DIR/local.sh"
+
+if [[ ! -f "$LOCAL_SH" ]]; then
+    echo "Error: $LOCAL_SH not found." >&2
+    echo "Copy local.sh.example to local.sh and configure it." >&2
+    exit 1
+fi
+
+source "$LOCAL_SH"
 NOW=$(date "+%H:%M:%S")
 
 
@@ -38,6 +44,7 @@ else
 fi
 
 
+echo -e "$SAFETY_FILE"
 echo -e "$NOW -> Starting Bisync\n"
 #rclone command
 rclone bisync "$REMOTE_PATH" "$LOCAL_PATH" \
@@ -54,6 +61,7 @@ rclone bisync "$REMOTE_PATH" "$LOCAL_PATH" \
   --fix-case \
   --max-delete 2 \
   --timeout 20s \
+  --exclude-from "$IGNORE_PATH" \
   -MP
 
 status=$?

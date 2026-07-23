@@ -75,6 +75,7 @@ execute-rofi() {
     --fix-case \
     --max-delete $md \
     --timeout 20s \
+    --exclude-from "$IGNORE_PATH" \
     -MP
 
   status=$?

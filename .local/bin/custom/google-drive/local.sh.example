@@ -31,3 +31,8 @@ REMOTE_SAFETY="REMOTE_PATH:rclone-safety-check.txt"
 # Name for the file for the --safety-file flag on rclone bysinc
 export LOG_PATH="path/to/logs"
 #--------------------------------------------------------------
+
+#----- Roclone Ignore List PATH -------------------------------
+# Path to rclone ignore list
+export IGNORE_PATH="PATH/TO/IGNORE"
+#--------------------------------------------------------------

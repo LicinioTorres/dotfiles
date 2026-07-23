@@ -63,6 +63,7 @@ rclone bisync "$REMOTE_PATH" "$LOCAL_PATH" \
   --fix-case \
   --max-delete 2 \
   --timeout 20s \
+  --exclude-from "$IGNORE_PATH" \
   -MP
 
 status=$?
